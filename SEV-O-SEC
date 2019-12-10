@@ -1,0 +1,240 @@
+from tkinter import *
+import winsound
+import playsound
+import random
+from PIL import *
+
+w=Tk()
+w.title("project")
+w.minsize(height=550,width=977)
+w.configure(background="#200fff")
+            
+background_image=tk.PhotoImage()
+background_label = tk.Label(parent, image=background_image)
+background_label.place(x=0, y=0, relwidth=1, relheight=1)
+def tmorse():             
+    l=Tk()
+    my=StringVar(l) 
+    def k(): 
+        a=(my.get()).upper()
+        t=[]
+        for i in range(65,91):
+            t.append(chr(i))
+        for i in range(0,10):
+            t.append(str(i))
+        l2=['._','_...','_._.','_..','.','.._.','__.','....','..','.___','_._','._..','__','_.','___','.__.','__._','._.','...','_','.._','..._','.__','_.._','_.__','__..','_____','.____','..___','...__','...._','.....','_....','__...','___..','____.']
+        key=dict(zip(t,l2))
+        d=''
+        for i in a:
+            if i in t:
+                d+=key[i]+' '
+            elif i==' ' :
+                d+='\t'
+            else:
+                d+=i
+        lb1=Label(l,text='morse:',bg='#200fff',fg='black',font=('verdana',15)).place(x=0,y=125)
+        lb=Label(l,text=d,bg='#200fff',fg='black',font=('verdana',20)).place(x=89,y=125)
+        for i in d:
+            if i=='.':
+                winsound.Beep(8000,450)
+            elif i=='_':
+                winsound.Beep(8000,700)
+            elif i==' ':
+                playsound.playsound('silence.mp3')
+    l.title("CONVERT TO MORSE")
+    l.minsize(height=550,width=977)
+    l.configure(background="#200fff")
+    lb=Label(l,text="MORSE CODE",fg="black",font=("verdana",45),bg="#200fff").place(x=350,y=0)
+    lb5=Label(l,text="ENTER MESSAGE:",fg="black",font=("verdana",12),bg="#200fff").place(x=0,y=100)
+    txt1=Entry(l,textvariable=my).place(x=200,y=100)
+    bt1=Button(l,text="SUBMIT",fg="black",font=("verdana",12),bg="#200fff",command=k).place(x=350,y=100)
+    BT2=Button(l,text="QUIT",fg="black",font=("verdana",12),bg="#200fff",command=l.destroy).place(x=1,y=200)
+    l.mainloop()
+def tknock():
+    win=Tk()
+    my=StringVar(win)
+    def k():
+            o=(my.get()).upper()
+            a=['A','B',['C','K'],'D','E']
+            a1=['F','G','H','I','J']
+            a2=['L','M','N','O','P']
+            a3=['Q','R','S','T','U']
+            a4=['V','W','X','Y','Z']
+            b=[a,a1,a2,a3,a4]
+            pos=[]
+            for i in o:
+               if i=='C' or i=='K' :
+                    pos.append([1,3])
+               else:
+                   for j in b:
+                       if i in j:
+                           t=[b.index(j)+1,j.index(i)+1]
+                           pos.append(t)
+            for i in pos:
+                for j in i:
+                    for t in range(j):
+                        playsound.playsound('KNOCK KNOCK.wav')
+                    playsound.playsound('silence.mp3')
+    win.title("CONVERT TO KNOCK CODE")
+    win.minsize(height=550,width=977)
+    win.configure(background="#200fff")
+    lb=Label(win,text="KNOCK CODE",fg="black",font=("vcerdana",45),bg="#200fff").place(x=350,y=0)
+    lb5=Label(win,text="ENTER MESSAGE:",fg="black",font=("vcerdana",12),bg="#200fff").place(x=0,y=100)
+    txt1=Entry(win,textvariable=my).place(x=200,y=100)    
+    bt1=Button(win,text="SUBMIT",fg="black",font=("vcerdana",12),bg="#200fff",command=k).place(x=350,y=100)
+    BT2=Button(win,text="QUIT",fg="black",font=("vcerdana",12),bg="#200fff",command=win.destroy).place(x=1,y=125)
+    win.mainloop()
+def encrypter():    
+    l=Tk()
+    k=StringVar(l)    
+    def f():
+            s=(k.get()).upper()
+            x=random.randint(35,45)
+            m=random.randint(1,9)
+            w=''
+            for i in s:
+                t=ord(i)
+                t+=x
+                t*=m
+                w+=chr(t)
+            t=len(w)
+            t//=2
+            w=w[:t]+'0'+str(m)+str(x)+w[t:]
+            lab=Label(l,text='ENCRYPTED TEXT : ',fg='black',bg='#200fff',font=('verdana',12)).place(x=0,y=150)
+            op=Label(l,text=w,fg='black',bg='#200fff',font=('verdana',12)).place(x=200,y=150)
+    l.title('CONVERT TO ADVANCE CIPHER')
+    l.configure(background='#200fff')
+    l.minsize(height=650,width=980)
+    lab1=Label(l,text='ADVANCED CEASER CIPHER SHIFT',fg='black',bg='#200fff',font=('verdana',25))
+    lab1.place(x=0,y=0)
+    lab2=Label(l,text='ENTER MESSAGE',fg='black',font=('verdana',12),bg='#200fff').place(x=0,y=100)
+    txt1=Entry(l,textvariable=k).place(x=200,y=100)
+    lab3=Button(l,text='SUBMIT',fg='black',font=('verdana',12),bg='#200fff',command=f).place(x=350,y=100)
+    lab4=Button(l,text='QUIT',fg='black',font=('verdana',12),bg='#200fff',command=l.destroy).place(x=1,y=250)
+    l.mainloop()
+def decrypter():
+    wd=Tk()
+    f=StringVar(wd)
+    def o():
+        s=(f.get()).upper()
+        w,k='',''
+        for i in s:
+            if i.isdigit():
+                k+=i
+            else:
+                w+=i
+        k=int(k)
+        t=k%100
+        k//=100
+        s=''
+        for i in w:
+            x=ord(i)
+            x//=k
+            x-=t
+            s+=chr(x)
+        op=Label(wd,text='CONVERTED TEXT',font=('verdana',12),bg='#200fff',fg='black').place(x=0,y=150)
+        op1=Label(wd,text=s,font=('verdana',12),bg='#200fff',fg='black').place(x=150,y=150)
+    wd.title('CONVERT FROM ADVANCE CIPHER')
+    wd.configure(background='#200fff')
+    wd.minsize(height=550,width=977)
+    lab1=Label(wd,text='CLEAR TEXT FROM ADV CEASER SHIFT',fg='black',bg='#200fff',font=('verdana',25))
+    lab1.place(x=350,y=0)
+    lab2=Label(wd,text='ENTER MESSAGE',fg='black',font=('verdana',12),bg='#200fff').place(x=0,y=100)
+    txt1=Entry(wd,textvariable=f).place(x=200,y=100)
+    lab3=Button(wd,text='SUBMIT',fg='black',font=('verdana',12),bg='#200fff',command=o).place(x=350,y=100)
+    lab4=Button(wd,text='QUIT',fg='black',font=('verdana',12),bg='#200fff',command=wd.destroy).place(x=1,y=250)
+    wd.mainloop()
+def fmorse():
+    wd=Tk()
+    s=[]
+    wd.title("CONVERT MORSE CODE TO TEXT")
+    def dot():
+        
+        s.append(".")
+    def dash():
+        s.append("_")
+    def space():
+        s.append(" ")
+    
+    but1=Button(wd,text=".dot",command=dot,fg="black",bg='#200fff',font=('verdana',19)).place(x=0,y=100)
+    b5=Button(wd,text="_dash",command=dash,fg="black",bg='#200fff',font=('verdana',19)).place(x=150,y=100)
+    but3=Button(wd,text="space",command=space,fg="black",bg='#200fff',font=('verdana',19)).place(x=300,y=100)
+    def f():
+        k=s
+        t=[]
+        temp=''
+        for i in k:
+            temp+=i
+        k=temp.split()
+        for i in range(65,91):
+            t.append(chr(i))
+        for i in range(0,10):
+            t.append(str(i))
+        l=['._','_...','_._.','_..','.','.._.','__.','....','..','.___','_._','._..','__','_.','___','.__.','__._','._.','...','_','.._','..._','.__','_.._','_.__','__..','_____','.____','..___','...__','...._','.....','_....','__...','___..','____.']
+        key=dict(zip(l,t))
+        w=''
+        for i in k:
+            if i in l:
+                w+=key[i]
+        lb=Label(wd,text='CONVERTED TEXT :',fg='black',font=('verdana',12),bg='#200fff').place(x=0,y=150)
+        bl=Label(wd,text=w,fg='black',font=('verdana',12),bg='#200fff').place(x=250,y=150)
+    wd.configure(background='#200fff')
+    wd.minsize(height=550,width=977)
+    lab1=Label(wd,text='MORSE CODE TO CLEAR TEXT',fg='black',font=('verdana',12),bg='#200fff').place(x=175,y=0)
+    bt1=Button(wd,text='SUBMIT',fg='black',font=('verdana',12),bg='#200fff',command=f).place(x=300,y=200)
+    bt2=Button(wd,text='QUIT',fg='black',font=('verdana',12),bg='#200fff',command=wd.destroy).place(x=1,y=300)
+    wd.mainloop()
+def fknock():
+    wd=Tk()
+    l=[]
+    kc=[]
+    kr=[]
+    def r():
+        kr.append(1)
+    def c():
+        kc.append(1)
+    def sp():
+        r=0
+        for i in kr:
+            r+=1
+        c=0
+        for i in kc:
+            c+=1
+        l.append([r,c])
+        kr.clear()
+        kc.clear()
+    bt1=Button(wd,text="row",command=r,fg="black",bg='#200fff',font=('verdana',19)).place(x=0,y=100)
+    bt2=Button(wd,text="column",command=c,fg="black",bg='#200fff',font=('verdana',19)).place(x=100,y=100)
+    bt3=Button(wd,text="next letter",command=sp,fg="black",bg='#200fff',font=('verdana',19)).place(x=0,y=300)
+    bt4=Button(wd,text="quit",command=wd.destroy,fg="black",bg='#200fff',font=('verdana',19)).place(x=0,y=400)    
+    def f():        
+        pos=l
+        a=['A','B',['C','K'],'D','E']
+        a1=['F','G','H','I','J']
+        a2=['L','M','N','O','P']
+        a3=['Q','R','S','T','U']
+        a4=['V','W','X','Y','Z']
+        b=[a,a1,a2,a3,a4]
+        w=''
+        for i in pos:
+            if i!=[1,3]:
+                w+=b[i[0]-1][i[1]-1]
+            else:
+                w+="C(K)"
+        lb=Label(wd,text='CONVERTED TEXT :',fg='black',font=('verdana',20),bg='#200fff').place(x=0,y=200)
+        bl=Label(wd,text=w,fg='black',font=('verdana',20),bg='#200fff').place(x=350,y=200)
+    wd.title('CONVERT KNOCK CODE TO TEXT')
+    wd.configure(background='#200fff')
+    wd.minsize(height=550,width=977)
+    bt1=Button(wd,text='SUBMIT',fg='black',font=('verdana',19),bg='#200fff',command=f).place(x=250,y=300)
+    wd.mainloop()
+#main function from here on
+lb1=Label(text="SEV-O-SEC",font=("times new roman",45),fg="black",bg="#200fff").place(x=350,y=0)
+bt1=Button(w,text="MORSE CODE",font=("times new roman",15),fg="black",bg="#200fff",command=tmorse).place(x=0,y=100)
+bt2=Button(w,text="KNOCK CODE",font=("times new roman",15),fg="black",bg="#200fff",command=tknock).place(x=0,y=150)
+bt3=Button(w,text="ADVANCE CAESER SHIFT",font=("times new roman",15),fg="black",bg="#200fff",command=encrypter).place(x=0,y=200)
+bt4=Button(w,text='CLEAR TEXT FROM MORSE',font=("times new roman",15),fg="black",bg="#200fff",command=fmorse).place(x=280,y=100)
+bt5=Button(w,text='CLEAR TEXT FROM KNOCK CODE',font=("times new roman",15),fg="black",bg="#200fff",command=fknock).place(x=280,y=150)
+bt6=Button(w,text='CLEAR TEXT FROM CAESER SHIFT',font=("times new roman",15),fg="black",bg="#200fff",command=decrypter).place(x=280,y=200)           
+BT2=Button(w,text="QUIT",font=("times new roman",15),fg="black",bg="#200fff",command=w.destroy).place(x=1,y=300)
+w.mainloop()
